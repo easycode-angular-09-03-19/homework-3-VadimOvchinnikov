@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+table, td, th {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 4px;
+}
+
+.dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 0 26px 2px rgba(0,0,0,0.75), 0 0 100vmax #aaa;
+  padding: 10px;
+}
+
+.dialog__header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #777;
+  font-weight: bold;
+  display: flex;
+}
+
+.dialog__close-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 0;
+  padding: 2px;
+  box-sizing: content-box;
+  background: transparent;
+  border: 0;
+  margin-left: auto;
+}
+
+.dialog__form-fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px 5px;
+  padding: 10px 0;
+}
+
+.dialog__button-block {
+  padding-top: 10px;
+  border-top: 1px solid #777;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  border: 1px solid #fff;
+  border-radius: 0;
+  background-color: #357edd;
+  color: #fff;
+  min-width: 6rem;
+  padding: 5px;
+}
+
+  .button + .button {
+    margin-left: 10px;
+  }
+
+  .button[disabled] {
+    background-color: #777;
+  }
+
+.field-required:after {
+  content: "*";
+  color: #ff0000;
+}

@@ -1,0 +1,100 @@
+<h2>Cars</h2>
+
+<div class="car-grid">
+  <button class="button car-grid__add-car" (click)="openAddCarDialog()">Add car</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Mileage</th>
+        <th>Fuel</th>
+        <th>Tank capacity</th>
+        <th>Fuel per kilometer</th>
+        <th>Acitons</th>
+        <th>Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td>{{car.name}}</td>
+        <td>{{car.mileage}}</td>
+        <td>{{car.fuel}}</td>
+        <td>{{car.tankCapacity}}</td>
+        <td>{{car.fuelPerKilometer}}</td>
+        <td style="white-space: pre-wrap;">{{car.features.join("\r\n")}}</td>
+        <td>
+          <button class="button" *ngIf="!car.isEmptyTank" (click)="drive(car)">Drive</button>
+          <button class="button" *ngIf="car.isEmptyTank" (click)="refuel(car)">Refuel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="dialog" *ngIf="isAddCarDialogVisible">
+  <div class="dialog__header">
+    <div class="dialog__header-title">Add car</div>
+    <button class="dialog__close-button" (click)="closeAddCarDialog()">
+      <svg viewPort="0 0 12 12" width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2" />
+        <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="dialog__content">
+    <form [formGroup]="newCarForm">
+      <div class="dialog__form-fields">
+        <label class="field-required">Name</label>
+        <input type="text" formControlName="nameTextBox" />
+
+        <label class="field-required">Mileage</label>
+        <input type="text" formControlName="mileageTextBox" />
+
+        <label class="field-required">Fuel</label>
+        <input type="text" formControlName="fuelTextBox" />
+
+        <label class="field-required">Tank capacity</label>
+        <input type="text" formControlName="tankCapacityTextBox" />
+
+        <label class="field-required">Fuel per kilometer</label>
+        <input type="text" formControlName="fuelPerKilometerTextBox" />
+
+        <label>Features (feature per line)</label>
+        <textarea formControlName="featuresTextBox"></textarea>
+      </div>
+
+      <div class="dialog__button-block">
+        <button type="submit" class="button button--ok" (click)="addCar()" [disabled]="newCarForm.invalid">OK</button>
+        <button class="button button--cancel" (click)="closeAddCarDialog()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="dialog" *ngIf="isActionDialogVisible">
+  <div class="dialog__header">
+    <div class="dialog__header-title">{{actionHeader}}</div>
+    <button class="dialog__close-button" (click)="closeActionDialog()">
+      <svg viewPort="0 0 12 12" width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2" />
+        <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+
+  <form [formGroup]="actionForm">
+    <div class="dialog__content">
+      <div class="dialog__form-fields">
+        <label class="field-required">{{actionLabel}}</label>
+        <input type="text" formControlName="quantityTextBox" />
+      </div>
+    </div>
+
+    <div class="dialog__button-block">
+      <button type="submit" class="button button--ok" (click)="permormAction()" [disabled]="actionForm.invalid">OK</button>
+      <button class="button button--cancel" (click)="closeActionDialog()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,10 @@
+.car-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.car-grid__add-car {
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
