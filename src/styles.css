@@ -23,7 +23,7 @@ td, th {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  box-shadow: 0 0 26px 2px rgba(0,0,0,0.75), 0 0 0 100vmax #aaa;
+  box-shadow: 0 0 26px 2px rgba(0,0,0,0.75), 0 0 0 100vmax rgba(0,0,0,0.6);
   padding: 10px;
 }
 

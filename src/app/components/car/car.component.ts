@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Car } from '../car';
+import { Car } from './modules/car';
 
 @Component({
   selector: 'app-car',

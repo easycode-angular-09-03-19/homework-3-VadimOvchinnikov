@@ -1,4 +1,4 @@
-import { validateNumberValue } from './helpers/helper';
+import { validateNumberValue } from 'src/app/helpers/helper';
 
 export class Car {
   constructor(private _name: string, private _mileage: number, private _fuel: number, private _tankCapacity: number, private _fuelPerKilometer: number, private _features: Array<string>) {
