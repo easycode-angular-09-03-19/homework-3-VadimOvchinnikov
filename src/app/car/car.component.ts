@@ -54,6 +54,7 @@ export class CarComponent implements OnInit {
     this.cars.push(new Car(this.nameTextBox.value, parseFloat(this.mileageTextBox.value), parseFloat(this.fuelTextBox.value),
       parseFloat(this.tankCapacityTextBox.value), parseFloat(this.fuelPerKilometerTextBox.value), (this.featuresTextBox.value || "").split(/\r?\n/)));
     this.isAddCarDialogVisible = false;
+    this.newCarForm.reset();
   }
 
   public drive(car: Car) {
@@ -78,7 +79,7 @@ export class CarComponent implements OnInit {
     this.actionHeader = null;
     this.actionLabel = null;
     this.currentCar = null;
-    this.quantityTextBox.setValue(null);
+    this.actionForm.reset();
   }
 
   public permormAction() {
