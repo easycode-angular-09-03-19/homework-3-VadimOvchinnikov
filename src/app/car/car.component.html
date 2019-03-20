@@ -46,23 +46,23 @@
   <div class="dialog__content">
     <form [formGroup]="newCarForm">
       <div class="dialog__form-fields">
-        <label class="field-required">Name</label>
-        <input type="text" formControlName="nameTextBox" />
+        <label for="nameTextBox" class="field-required">Name</label>
+        <input id="nameTextBox" type="text" formControlName="nameTextBox" />
 
-        <label class="field-required">Mileage</label>
-        <input type="text" formControlName="mileageTextBox" />
+        <label for="mileageTextBox" class="field-required">Mileage</label>
+        <input id="mileageTextBox" type="text" formControlName="mileageTextBox" />
 
-        <label class="field-required">Fuel</label>
-        <input type="text" formControlName="fuelTextBox" />
+        <label for="fuelTextBox" class="field-required">Fuel</label>
+        <input id="fuelTextBox" type="text" formControlName="fuelTextBox" />
 
-        <label class="field-required">Tank capacity</label>
-        <input type="text" formControlName="tankCapacityTextBox" />
+        <label for="tankCapacityTextBox" class="field-required">Tank capacity</label>
+        <input id="tankCapacityTextBox" type="text" formControlName="tankCapacityTextBox" />
 
-        <label class="field-required">Fuel per kilometer</label>
-        <input type="text" formControlName="fuelPerKilometerTextBox" />
+        <label for="fuelPerKilometerTextBox" class="field-required">Fuel per kilometer</label>
+        <input id="fuelPerKilometerTextBox" type="text" formControlName="fuelPerKilometerTextBox" />
 
-        <label>Features (feature per line)</label>
-        <textarea formControlName="featuresTextBox"></textarea>
+        <label for="featuresTextBox">Features (feature per line)</label>
+        <textarea id="featuresTextBox" formControlName="featuresTextBox"></textarea>
       </div>
 
       <div class="dialog__button-block">
@@ -87,8 +87,8 @@
   <form [formGroup]="actionForm">
     <div class="dialog__content">
       <div class="dialog__form-fields">
-        <label class="field-required">{{actionLabel}}</label>
-        <input type="text" formControlName="quantityTextBox" />
+        <label for="quantityTextBox" class="field-required">{{actionLabel}}</label>
+        <input id="quantityTextBox" type="text" formControlName="quantityTextBox" />
       </div>
     </div>
 

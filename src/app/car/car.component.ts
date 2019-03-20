@@ -75,7 +75,7 @@ export class CarComponent implements OnInit {
 
   public closeActionDialog() {
     this.isActionDialogVisible = false;
-    this.actionName = null;;
+    this.actionName = null;
     this.actionHeader = null;
     this.actionLabel = null;
     this.currentCar = null;
