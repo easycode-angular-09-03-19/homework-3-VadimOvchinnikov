@@ -1,13 +1,34 @@
 import { validateNumberValue } from 'src/app/helpers/helper';
 
 export class Car {
-  constructor(private _name: string, private _mileage: number, private _fuel: number, private _tankCapacity: number, private _fuelPerKilometer: number, private _features: Array<string>) {
-    validateNumberValue(_mileage, "mileage");
-    validateNumberValue(_fuel, "fuel");
-    validateNumberValue(_tankCapacity, "tank capacity");
-    validateNumberValue(_fuelPerKilometer, "fuel per kilometre");
+  private _name: string;
+  private _mileage: number;
+  private _fuel: number;
+  private _tankCapacity: number;
+  private _fuelPerKilometer: number;
+  private _features: Array<string> = [];
 
-    if (_fuel > _tankCapacity) throw new Error("Fuel amount cannot be more than tank capacity.");
+  constructor(values: {
+    name: string,
+    mileage: number,
+    fuel: number,
+    tankCapacity: number,
+    fuelPerKilometer: number,
+    features?: Array<string>
+  }) {
+    this._name = values.name;
+    this._mileage = values.mileage;
+    this._fuel = values.fuel;
+    this._tankCapacity = values.tankCapacity;
+    this._fuelPerKilometer = values.fuelPerKilometer;
+    this._features = values.features;
+
+    validateNumberValue(values.mileage, "mileage");
+    validateNumberValue(values.fuel, "fuel");
+    validateNumberValue(values.tankCapacity, "tank capacity");
+    validateNumberValue(values.fuelPerKilometer, "fuel per kilometre");
+
+    if (values.fuel > values.tankCapacity) throw new Error("Fuel amount cannot be more than tank capacity.");
   }
 
   public drive(distance: number): void {

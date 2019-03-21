@@ -8,7 +8,10 @@ import { Car } from './modules/car';
   styleUrls: ['./car.component.css']
 })
 export class CarComponent implements OnInit {
-  public cars: Array<Car> = [new Car("BMW", 100, 20, 40, 0.08, ["Compfortable seats", "Nice design"]), new Car("Volvo", 2000, 5, 40, 0.05, ["Safety features"])];
+  public cars: Array<Car> = [
+    new Car({ name: "BMW", mileage: 100, fuel: 20, tankCapacity: 40, fuelPerKilometer: 0.08, features: ["Compfortable seats", "Nice design"] }),
+    new Car({ name: "Volvo", mileage: 2000, fuel: 5, tankCapacity: 40, fuelPerKilometer: 0.05, features: ["Safety features"] })
+  ];
   public isAddCarDialogVisible: boolean = false;
   public newCarForm: FormGroup;
 
@@ -51,8 +54,11 @@ export class CarComponent implements OnInit {
   public closeAddCarDialog() { this.isAddCarDialogVisible = false; }
 
   public addCar() {
-    this.cars.push(new Car(this.nameTextBox.value, parseFloat(this.mileageTextBox.value), parseFloat(this.fuelTextBox.value),
-      parseFloat(this.tankCapacityTextBox.value), parseFloat(this.fuelPerKilometerTextBox.value), (this.featuresTextBox.value || "").split(/\r?\n/)));
+    this.cars.push(new Car({
+      name: this.nameTextBox.value, mileage: parseFloat(this.mileageTextBox.value), fuel: parseFloat(this.fuelTextBox.value),
+      tankCapacity: parseFloat(this.tankCapacityTextBox.value), fuelPerKilometer: parseFloat(this.fuelPerKilometerTextBox.value),
+      features: (this.featuresTextBox.value || "").split(/\r?\n/)
+    }));
     this.isAddCarDialogVisible = false;
     this.newCarForm.reset();
   }
