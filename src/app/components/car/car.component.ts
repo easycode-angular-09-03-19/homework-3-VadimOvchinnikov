@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Car } from './modules/car';
+import { ValidationHelper } from 'src/app/helpers/validation-helper';
 
 @Component({
   selector: 'app-car',
@@ -33,20 +34,41 @@ export class CarComponent implements OnInit {
 
   public get quantityTextBox() { return this.actionForm.controls.quantityTextBox; }
 
+  public get name() { return this.nameTextBox.value; }
+  public get mileage() { return ValidationHelper.getNumericValue(this.mileageTextBox); }
+  public get fuel() { return ValidationHelper.getNumericValue(this.fuelTextBox); }
+  public get tankCapacity() { return ValidationHelper.getNumericValue(this.tankCapacityTextBox); }
+  public get fuelPerKilometer() { return ValidationHelper.getNumericValue(this.fuelPerKilometerTextBox); }
+  public get features() { return (this.featuresTextBox.value || "").split(/\r?\n/); }
+
   public ngOnInit() {
-    const numberPattern: string = "^[0-9]+(\.[0-9]+)?$";
+    const nonNegativeNumberPattern: string = "^[0-9]+(\.[0-9]+)?$";
+    const positiveNumberPattern: string = "^[1-9][0-9]*(\.[0-9]+)?$";
     this.newCarForm = new FormGroup({
       nameTextBox: new FormControl(null, [Validators.required]),
-      mileageTextBox: new FormControl(null, [Validators.required, Validators.pattern(numberPattern)]),
-      fuelTextBox: new FormControl(null, [Validators.required, Validators.pattern(numberPattern)]),
-      tankCapacityTextBox: new FormControl(null, [Validators.required, Validators.pattern(numberPattern)]),
-      fuelPerKilometerTextBox: new FormControl(null, [Validators.required, Validators.pattern(numberPattern)]),
+      mileageTextBox: new FormControl(null, [Validators.required, Validators.pattern(nonNegativeNumberPattern)]),
+      fuelTextBox: new FormControl(null, [Validators.required, Validators.pattern(nonNegativeNumberPattern)]),
+      tankCapacityTextBox: new FormControl(null, [Validators.required, Validators.pattern(positiveNumberPattern)]),
+      fuelPerKilometerTextBox: new FormControl(null, [Validators.required, Validators.pattern(positiveNumberPattern)]),
       featuresTextBox: new FormControl()
-    });
+    }, { validators: this.notMoreThanControlValue });
 
     this.actionForm = new FormGroup({
-      quantityTextBox: new FormControl(null, [Validators.required, Validators.pattern(numberPattern)])
+      quantityTextBox: new FormControl(null, [Validators.required, Validators.pattern(positiveNumberPattern)])
     });
+  }
+
+  public notMoreThanControlValue(group: FormGroup) {
+    const fuelTextBox = group.controls.fuelTextBox;
+    const tankCapacityTextBox = group.controls.tankCapacityTextBox;
+
+    if (fuelTextBox.invalid) { return null; }
+
+    if (tankCapacityTextBox.invalid) { return null; }
+
+    var isInvalid = ValidationHelper.getNumericValue(fuelTextBox) > ValidationHelper.getNumericValue(tankCapacityTextBox);
+    var errorObject = isInvalid ? { notMoreThanTankCapacity: true } : null;
+    return errorObject;
   }
 
   public openAddCarDialog() { this.isAddCarDialogVisible = true; }
@@ -55,9 +77,8 @@ export class CarComponent implements OnInit {
 
   public addCar() {
     this.cars.push(new Car({
-      name: this.nameTextBox.value, mileage: parseFloat(this.mileageTextBox.value), fuel: parseFloat(this.fuelTextBox.value),
-      tankCapacity: parseFloat(this.tankCapacityTextBox.value), fuelPerKilometer: parseFloat(this.fuelPerKilometerTextBox.value),
-      features: (this.featuresTextBox.value || "").split(/\r?\n/)
+      name: this.name, mileage: this.mileage, fuel: this.fuel, tankCapacity: this.tankCapacity, fuelPerKilometer: this.fuelPerKilometer,
+      features: this.features
     }));
     this.isAddCarDialogVisible = false;
     this.newCarForm.reset();

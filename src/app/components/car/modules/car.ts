@@ -1,4 +1,4 @@
-import { validateNumberValue } from 'src/app/helpers/helper';
+import { ValidationHelper, ValidationPattern } from 'src/app/helpers/validation-helper';
 
 export class Car {
   private _name: string;
@@ -23,16 +23,16 @@ export class Car {
     this._fuelPerKilometer = values.fuelPerKilometer;
     this._features = values.features;
 
-    validateNumberValue(values.mileage, "mileage");
-    validateNumberValue(values.fuel, "fuel");
-    validateNumberValue(values.tankCapacity, "tank capacity");
-    validateNumberValue(values.fuelPerKilometer, "fuel per kilometre");
+    ValidationHelper.validateNumberValue(values.mileage, "mileage", ValidationPattern.NonNegative);
+    ValidationHelper.validateNumberValue(values.fuel, "fuel", ValidationPattern.NonNegative);
+    ValidationHelper.validateNumberValue(values.tankCapacity, "tank capacity", ValidationPattern.Positive);
+    ValidationHelper.validateNumberValue(values.fuelPerKilometer, "fuel per kilometre", ValidationPattern.Positive);
 
     if (values.fuel > values.tankCapacity) throw new Error("Fuel amount cannot be more than tank capacity.");
   }
 
   public drive(distance: number): void {
-    validateNumberValue(distance, "distance");
+    ValidationHelper.validateNumberValue(distance, "distance", ValidationPattern.Positive);
     const fuelSpent = Math.min(this._fuelPerKilometer * distance, this._fuel);
     this._fuel -= fuelSpent;
     this._mileage += fuelSpent / this._fuelPerKilometer;
@@ -41,7 +41,7 @@ export class Car {
   }
 
   public refuel(fuel: number): void {
-    validateNumberValue(fuel, "quantity");
+    ValidationHelper.validateNumberValue(fuel, "quantity", ValidationPattern.Positive);
 
     if (this._fuel + fuel > this._tankCapacity) throw new Error("Fuel amount cannot be more than tank capacity.");
 
